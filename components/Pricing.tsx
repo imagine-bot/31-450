@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 type PricingPlan = {
+  id: string;
   name: string;
   price: {
     monthly: number;
@@ -9,12 +10,25 @@ type PricingPlan = {
   features: string[];
 };
 
-type PricingProps = {
-  plans: PricingPlan[];
-};
-
-const Pricing: React.FC<PricingProps> = ({ plans }) => {
+const Pricing: React.FC = () => {
   const [isMonthly, setIsMonthly] = useState(true);
+  const [plans, setPlans] = useState<PricingPlan[]>([]);
+
+  useEffect(() => {
+    fetch('/api/plans')
+      .then(response => response.json())
+      .then(data => setPlans(data));
+  }, []);
+
+  const selectPlan = (planId: string) => {
+    fetch('/api/selectPlan', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ planId }),
+    });
+  };
 
   return (
     <div className="flex flex-col items-center">
@@ -33,9 +47,9 @@ const Pricing: React.FC<PricingProps> = ({ plans }) => {
         />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {plans.map((plan, index) => (
+        {plans.map((plan) => (
           <div
-            key={index}
+            key={plan.id}
             className="border rounded-lg p-4 hover:shadow-lg transition-shadow duration-200 bg-white"
           >
             <h2 className="text-2xl mb-2">{plan.name}</h2>
@@ -47,7 +61,7 @@ const Pricing: React.FC<PricingProps> = ({ plans }) => {
                 <li key={index}>{feature}</li>
               ))}
             </ul>
-            <button className="mt-4 bg-blue-500 text-white rounded px-4 py-2">Signup</button>
+            <button onClick={() => selectPlan(plan.id)} className="mt-4 bg-blue-500 text-white rounded px-4 py-2">Signup</button>
           </div>
         ))}
       </div>
