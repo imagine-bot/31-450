@@ -50,7 +50,7 @@ const Pricing: React.FC = () => {
         {plans.map((plan) => (
           <div
             key={plan.id}
-            className="border rounded-lg p-4 hover:shadow-lg transition-shadow duration-200 bg-white"
+            className="border rounded-lg p-4 hover:shadow-lg transition-shadow duration-200 bg-white w-full md:w-1/2"
           >
             <h2 className="text-2xl mb-2">{plan.name}</h2>
             <p className="text-4xl mb-4">
@@ -61,7 +61,9 @@ const Pricing: React.FC = () => {
                 <li key={index}>{feature}</li>
               ))}
             </ul>
-            <button onClick={() => selectPlan(plan.id)} className="mt-4 bg-blue-500 text-white rounded px-4 py-2">Signup</button>
+            <div className="flex justify-center">
+              <button onClick={() => selectPlan(plan.id)} className="mt-4 bg-blue-500 text-white rounded px-4 py-2">Signup</button>
+            </div>
           </div>
         ))}
       </div>
