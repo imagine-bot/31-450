@@ -36,7 +36,7 @@ const Pricing: React.FC<PricingProps> = ({ plans }) => {
         {plans.map((plan, index) => (
           <div
             key={index}
-            className="border rounded-lg p-4 hover:shadow-lg transition-shadow duration-200"
+            className="border rounded-lg p-4 hover:shadow-lg transition-shadow duration-200 bg-white"
           >
             <h2 className="text-2xl mb-2">{plan.name}</h2>
             <p className="text-4xl mb-4">
@@ -47,6 +47,7 @@ const Pricing: React.FC<PricingProps> = ({ plans }) => {
                 <li key={index}>{feature}</li>
               ))}
             </ul>
+            <button className="mt-4 bg-blue-500 text-white rounded px-4 py-2">Signup</button>
           </div>
         ))}
       </div>
